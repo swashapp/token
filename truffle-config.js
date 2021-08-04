@@ -42,6 +42,16 @@ module.exports = {
 		gasPrice: utils.toWei('8', 'gwei')
 	},
 	
+	goerli: {
+		provider: function() {
+			return new HDWalletProvider(process.env.MNEMONIC, `https://goerli.infura.io/v3/${process.env.INFURA_TOKEN}`)
+		},
+		network_id: 0x5,
+		from: process.env.OWNER_ADDRESS,
+		gas: 7 * 1000000,
+		gasPrice: utils.toWei('8', 'gwei')
+	},
+	
 	mainnet: {
 		provider: function() {
 			return new HDWalletProvider(process.env.MNEMONIC, `https://mainnet.infura.io/v3/${process.env.INFURA_TOKEN}`)
