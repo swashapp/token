@@ -20,7 +20,7 @@ abstract contract ERC677 is ERC20, IERC677 {
     returns (bool success)
   {
     super.transfer(_to, _value);
-    emit Transfer(msg.sender, _to, _value, _data);
+    emit TransferToken(msg.sender, _to, _value, _data);
     if (isContract(_to)) {
       contractFallback(_to, _value, _data);
     }
