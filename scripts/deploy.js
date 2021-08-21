@@ -9,6 +9,7 @@ async  function  main(){
     const swash=await Swash.deploy();
     console.log("Swash is deployed with address: %s",swash.address);
     const data={
+        
         address:swash.address,
         abi:JSON.parse(swash.interface.format('json'))
     }
