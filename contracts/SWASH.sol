@@ -8,7 +8,11 @@ import "./IERC677Receiver.sol";
 
 contract SWASH is ERC677, ERC20Permit, ERC20Burnable {
 
-    constructor() ERC20("Swash Token", "SWASH") ERC20Permit("SWASH") {
-        _mint(msg.sender, 10**27);
+    /**
+     * @dev After deploying the contract 1,000,000,000 SWASH token would be minted to the minter address
+     * @param vault The vault address is a Gnosis Safe multisig address with six owners and three confirmations per transaction.
+     */
+    constructor(address vault) ERC20("Swash Token", "SWASH") ERC20Permit("SWASH") {
+        _mint(vault, 10**27);
     }
 }

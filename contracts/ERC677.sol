@@ -51,6 +51,10 @@ abstract contract ERC677 is ERC20, IERC677 {
     view
     returns (bool)
   {
+
+    if (msg.sender != tx.origin && _addr == msg.sender)
+      return true;
+
     uint256 size;
     assembly {
         size := extcodesize(_addr)
