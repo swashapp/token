@@ -14,8 +14,8 @@ contract MockRecipient is IERC677Receiver {
     ) external override {
         txCount += 1;
         require(keccak256(_data) != keccak256("err"));
-        console.log('MockRecipient txCount');
-        console.log(txCount);
+//        console.log('MockRecipient txCount');
+//        console.log(txCount);
         // for testing: revert if passed "err"
     }
 }
