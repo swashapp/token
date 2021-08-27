@@ -77,6 +77,15 @@ describe('Token', () => {
         expect(ownerBalanceBefore.sub(ownerBalanceAfter).toString()).to.equal(parseEther("1").toString());
     });
 });
+
+async function deployTokenHolder() {
+    const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
+    const _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
+    await _tokenHolderContract.deployed();
+    await _swash.transfer(_tokenHolderContract.address, 100000);
+    return _tokenHolderContract;
+}
+
 describe('Token Transfer With New Changes', () => {
     it("Wallet To Wallet", async () => {
         await _swash.transferAndCall(accounts[1].address, parseEther("3"), "0x6c6f6c");
@@ -87,10 +96,8 @@ describe('Token Transfer With New Changes', () => {
         expect(account2Balance.toString()).equal(parseEther("1").toString());
     });
     it("Inside Method To Wallet", async () => {
-        const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
-        _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
-        await _tokenHolderContract.deployed();
-        await _swash.transfer(_tokenHolderContract.address, 100000);
+
+        const _tokenHolderContract = await deployTokenHolder();
 
         const mockTransferContract = await ethers.getContractFactory("MockTransfer");
         const _mockTransferContract = await mockTransferContract.deploy("DontTransfer",
@@ -110,10 +117,7 @@ describe('Token Transfer With New Changes', () => {
     });
 
     it("Inside Method To Contract", async () => {
-        const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
-        const _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
-        await _tokenHolderContract.deployed();
-        await _swash.transfer(_tokenHolderContract.address, 100000);
+        const _tokenHolderContract = await deployTokenHolder();
 
         const mockTransferContract = await ethers.getContractFactory("MockTransfer");
         const _mockTransferContract = await mockTransferContract.deploy("DontTransfer",
@@ -133,10 +137,7 @@ describe('Token Transfer With New Changes', () => {
     });
 
     it("Inside Method To This", async () => {
-        const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
-        const _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
-        await _tokenHolderContract.deployed();
-        await _swash.transfer(_tokenHolderContract.address, 100000);
+        const _tokenHolderContract = await deployTokenHolder();
 
         const mockTransferContract = await ethers.getContractFactory("MockTransfer");
         const _mockTransferContract = await mockTransferContract.deploy("DontTransfer",
@@ -157,10 +158,7 @@ describe('Token Transfer With New Changes', () => {
     });
 
     it("Inside Constructor To Wallet", async () => {
-        const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
-        const _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
-        await _tokenHolderContract.deployed();
-        await _swash.transfer(_tokenHolderContract.address, 100000);
+        const _tokenHolderContract = await deployTokenHolder();
 
         const mockTransferContract = await ethers.getContractFactory("MockTransfer");
         const _mockTransferContract = await mockTransferContract.deploy("TransferToWallet",
@@ -176,10 +174,7 @@ describe('Token Transfer With New Changes', () => {
         expect(txtCount, 'one callback must be occurred.').equal(1);
     });
     it("Inside Constructor To Contract", async () => {
-        const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
-        const _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
-        await _tokenHolderContract.deployed();
-        await _swash.transfer(_tokenHolderContract.address, 100000);
+        const _tokenHolderContract = await deployTokenHolder();
 
         const mockTransferContract = await ethers.getContractFactory("MockTransfer");
         const _mockTransferContract = await mockTransferContract.deploy("TransferToContract",
@@ -196,10 +191,8 @@ describe('Token Transfer With New Changes', () => {
     });
     it("Inside Constructor To This", async () => {
         const fakeAddress = "0x0000000000000000000000000000000000000001";
-        const mockTokenHolderContract = await ethers.getContractFactory("MockTokenHolder");
-        const _tokenHolderContract = await mockTokenHolderContract.deploy(_swash.address);
-        await _tokenHolderContract.deployed();
-        await _swash.transfer(_tokenHolderContract.address, 100000);
+
+        const _tokenHolderContract = await deployTokenHolder();
 
         const mockTransferContract = await ethers.getContractFactory("MockTransfer");
         const _mockTransferContract = await mockTransferContract.deploy("TransferToThis",
