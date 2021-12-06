@@ -6,7 +6,7 @@ const rinkebyProvider = new ethers.providers.JsonRpcProvider('https://rinkeby.in
 const ropstenProvider = new ethers.providers.JsonRpcProvider('https://ropsten.infura.io/v3/c941387bd4d8467285c24d75ad3574a4');
 const xdaiProvider = new ethers.providers.JsonRpcProvider('https://rpc.xdaichain.com/');
 const bscProvider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed1.defibit.io');
-const polygonProvider = new ethers.providers.JsonRpcProvider('https://rpc.ankr.com/polygon');
+const polygonProvider = new ethers.providers.JsonRpcProvider ('https://rpc.ankr.com/polygon');
 const mumbaiProvider = new ethers.providers.JsonRpcProvider('https://matic-mumbai.chainstacklabs.com/');
 
 function getProvider(network) {
