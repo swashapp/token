@@ -50,7 +50,8 @@ ETHERSCAN_API_KEY=<The Etherscan API Key which is used for publishing the source
 truffle compile
 ```
 
-
+---
+##SwashToken
 
 # Network Deployments
 
@@ -68,9 +69,14 @@ You can deploy the contract locally, to Rinkeby, or to Ethereum mainnet.
 ## Deploy to mainnet
 
 * In your main terminal, run: `truffle migrate --network mainnet`
+---
+##SwashTokenOnPolygon
 
+## Deploy token
 
+run `node .\scripts\deploy-tokenOnPolygon.js <mumbai/(matic/polygon)> <rootChainManager>`
 
+---
 # License
 
 ```
