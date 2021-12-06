@@ -5,14 +5,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./SWASH.sol";
 
 contract SwashOnPolygon is SWASH, Ownable {
-    address public sideChainManager;
+    address public childChainManager ;
 
-    constructor(address initialSideChainManager) SWASH() {
-        setSideChainManager(initialSideChainManager);
+    constructor(address initialChildChainManager ) SWASH() {
+        setChildChainManager (initialChildChainManager );
     }
 
-    function setSideChainManager(address newRootChainManager) public onlyOwner {
-        sideChainManager = newRootChainManager;
+    function setChildChainManager (address newRootChainManager) public onlyOwner {
+        childChainManager  = newRootChainManager;
     }
 
     /**
@@ -21,11 +21,11 @@ contract SwashOnPolygon is SWASH, Ownable {
      * Equal amount of tokens got locked in RootChainManager on the mainnet side
      */
     function deposit(address user, bytes calldata depositData) external {
-        require(_msgSender() == sideChainManager, "error_onlyBridge");
+        require(_msgSender() == childChainManager , "error_onlyBridge");
         uint256 amount = abi.decode(depositData, (uint256));
 
-        // emits two Transfer events: 0x0 -> sideChainManager -> user
-        _mint(sideChainManager, amount);
+        // emits two Transfer events: 0x0 -> childChainManager  -> user
+        _mint(childChainManager , amount);
         transferAndCall(user, amount, depositData);
     }
 
