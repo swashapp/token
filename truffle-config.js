@@ -60,7 +60,29 @@ module.exports = {
 		from: process.env.OWNER_ADDRESS,
 		gas: 2 * 1000000,
 		gasPrice: utils.toWei('105', 'gwei')
-	}    
+	},
+
+	matic: {
+		provider: function() {
+			return new HDWalletProvider(process.env.MNEMONIC, `https://rpc-mainnet.matic.quiknode.pro/`)
+
+		},
+		network_id: 137,
+		from: process.env.OWNER_ADDRESS,
+		gas: 5 * 1000000,
+		gasPrice: utils.toWei('100', 'gwei')
+	},
+	  mumbai: {
+		  provider: function() {
+			  return new HDWalletProvider(process.env.MNEMONIC, `https://matic-mumbai.chainstacklabs.com`)
+
+		  },
+		  network_id: 80001,
+		  from: process.env.OWNER_ADDRESS,
+		  gas: 5 * 1000000,
+		  gasPrice: utils.toWei('10', 'gwei')
+	  }
+
 
   },
 
@@ -100,7 +122,8 @@ module.exports = {
   ],
   
   api_keys: {
-    etherscan: process.env.ETHERSCAN_API_KEY
+  	//To verify on different network use appropriate api_keys
+    etherscan: process.env.POLYGONSCAN_API_KEY
   }
 
 };

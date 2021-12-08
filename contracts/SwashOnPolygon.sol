@@ -2,23 +2,27 @@
 pragma solidity 0.8.6;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./SWASH.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
+import "./ERC677.sol";
+import "./IERC677Receiver.sol";
 
-contract SwashOnPolygon is SWASH, Ownable {
+
+contract SwashOnPolygon is ERC677, ERC20Permit, ERC20Burnable, Ownable {
     address public childChainManager ;
 
-    constructor(address initialChildChainManager ) SWASH() {
+    constructor(address initialChildChainManager )  ERC20("Swash Token", "SWASH") ERC20Permit("SWASH")  {
         setChildChainManager (initialChildChainManager );
     }
 
-    function setChildChainManager (address newRootChainManager) public onlyOwner {
-        childChainManager  = newRootChainManager;
+    function setChildChainManager (address newChildChainManager) public onlyOwner {
+        childChainManager  = newChildChainManager;
     }
 
     /**
      * When tokens are bridged from mainnet, perform a "mint" and "transferAndCall" to activate
      *   the receiving contract's ERC677 onTokenTransfer callback
-     * Equal amount of tokens got locked in RootChainManager on the mainnet side
+     * Equal amount of tokens got locked in ChildChainManager on the mainnet side
      */
     function deposit(address user, bytes calldata depositData) external {
         require(_msgSender() == childChainManager , "error_onlyBridge");
