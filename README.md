@@ -88,6 +88,8 @@ run `npx hardhat run --network bsc  .\scripts\deploy-tokenOnBSC-HW.js`
 
 set rpc of multichain as admin and minter
 
+https://github.com/anyswap/chaindata/blob/main/deploy.md
+
 ---
 # License
 

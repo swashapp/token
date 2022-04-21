@@ -16,13 +16,22 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
     event LogSwapin(bytes32 indexed txhash, address indexed account, uint amount);
     event LogSwapout(address indexed account, address indexed bindaddr, uint amount);
 
+    // flag to enable/disable swapout vs vault.burn so multiple events are triggered
+    bool private _vaultOnly;
+
     constructor()  ERC20("Swash Token", "SWASH") ERC20Permit("SWASH") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _vaultOnly = false;
     }
 
     function transferOwnership(address newOwner) public override onlyOwner {
-        Ownable.transferOwnership(newOwner);
         setAdmin(newOwner);
+        revokeAdmin(owner());
+        Ownable.transferOwnership(newOwner);
+    }
+
+    function setVaultOnly(bool enabled) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _vaultOnly = enabled;
     }
 
     function setMinter(address wallet) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -33,7 +42,7 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
         grantRole(DEFAULT_ADMIN_ROLE, wallet);
     }
 
-    function revokeAdmin(address wallet) public onlyOwner {
+    function revokeAdmin(address wallet) public onlyRole(DEFAULT_ADMIN_ROLE){
         require(owner() != wallet, "Can not revoke owner");
         revokeRole(DEFAULT_ADMIN_ROLE, wallet);
     }
@@ -45,19 +54,6 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
     function mint(address to, uint256 amount) external onlyRole(MINTER_ROLE) returns (bool) {
         _mint(to, amount);
         return true;
-    }
-
-    function burn(uint256 amount) public virtual {
-        _burn(_msgSender(), amount);
-    }
-
-    function burnFrom(address account, uint256 amount) public virtual {
-        uint256 currentAllowance = allowance(account, _msgSender());
-        require(currentAllowance >= amount, "ERC20: burn amount exceeds allowance");
-    unchecked {
-        _approve(account, _msgSender(), currentAllowance - amount);
-    }
-        _burn(account, amount);
     }
 
     function burn(address from, uint256 amount) external onlyRole(MINTER_ROLE) returns (bool) {
@@ -73,6 +69,7 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
     }
 
     function Swapout(uint256 amount, address bindaddr) public returns (bool) {
+        require(!_vaultOnly, "onlyAuth");
         require(bindaddr != address(0), "address(0x0)");
         _burn(msg.sender, amount);
         emit LogSwapout(msg.sender, bindaddr, amount);
