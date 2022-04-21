@@ -2,12 +2,10 @@
 
 pragma solidity 0.8.6;
 
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ERC677.sol";
-import "./IERC677Receiver.sol";
 
 contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
 
