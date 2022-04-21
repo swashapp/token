@@ -19,7 +19,7 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
     // flag to enable/disable swapout vs vault.burn so multiple events are triggered
     bool private _vaultOnly;
 
-    constructor()  ERC20("Swash Token", "SWASH") ERC20Permit("SWASH") {
+    constructor() ERC20("Swash Token", "SWASH") ERC20Permit("SWASH") {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _vaultOnly = false;
     }
@@ -42,7 +42,7 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
         grantRole(DEFAULT_ADMIN_ROLE, wallet);
     }
 
-    function revokeAdmin(address wallet) public onlyRole(DEFAULT_ADMIN_ROLE){
+    function revokeAdmin(address wallet) public onlyRole(DEFAULT_ADMIN_ROLE) {
         require(owner() != wallet, "Can not revoke owner");
         revokeRole(DEFAULT_ADMIN_ROLE, wallet);
     }
