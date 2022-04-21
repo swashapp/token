@@ -62,6 +62,26 @@ module.exports = {
 		gasPrice: utils.toWei('105', 'gwei')
 	},
 
+	bsc: {
+		provider: function() {
+			return new HDWalletProvider(process.env.MNEMONIC, `https://bsc-dataseed.binance.org/`)
+		},
+		network_id: 0x38,
+		from: process.env.OWNER_ADDRESS,
+		gas: 2 * 1000000,
+		gasPrice: utils.toWei('10', 'gwei')
+	},
+
+	bsctest: {
+		provider: function() {
+			return new HDWalletProvider(process.env.MNEMONIC, `https://data-seed-prebsc-1-s1.binance.org:8545/`)
+		},
+		network_id: 0x61,//97
+		from: process.env.OWNER_ADDRESS,
+		gas: 2 * 1000000,
+		gasPrice: utils.toWei('10', 'gwei')
+	},
+
 	matic: {
 		provider: function() {
 			return new HDWalletProvider(process.env.MNEMONIC, `https://rpc-mainnet.matic.quiknode.pro/`)
@@ -123,7 +143,8 @@ module.exports = {
   
   api_keys: {
   	//To verify on different network use appropriate api_keys
-    etherscan: process.env.POLYGONSCAN_API_KEY
+    // etherscan: process.env.POLYGONSCAN_API_KEY
+    etherscan: process.env.ETHERSCAN_API_KEY
   }
 
 };

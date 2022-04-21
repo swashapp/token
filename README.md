@@ -77,6 +77,18 @@ You can deploy the contract locally, to Rinkeby, or to Ethereum mainnet.
 run `node .\scripts\deploy-tokenOnPolygon.js <mumbai/(matic/polygon)> <rootChainManager>`
 
 ---
+##SwashTokenOnBSC
+
+## Deploy token
+first set accountPrivateKey = xxxxxxxxx
+
+set gasPrice in \node_modules\@ethersproject\hardware-wallets\lib\ledger.js file
+
+run `npx hardhat run --network bsc  .\scripts\deploy-tokenOnBSC-HW.js`
+
+set rpc of multichain as admin and minter
+
+---
 # License
 
 ```

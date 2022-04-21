@@ -6,7 +6,7 @@ const utils = require('web3-utils')
 let senderReceiver
 const amount = utils.toWei('15')
 
-contract('Token Vesting Factory test', async accounts => {
+contract('SWASH Token test on polygon', async accounts => {
 
     let owner
     let _swashToken
