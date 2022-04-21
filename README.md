@@ -70,14 +70,14 @@ You can deploy the contract locally, to Rinkeby, or to Ethereum mainnet.
 
 * In your main terminal, run: `truffle migrate --network mainnet`
 ---
-##SwashTokenOnPolygon
+## SwashTokenOnPolygon
 
 ## Deploy token
 
 run `node .\scripts\deploy-tokenOnPolygon.js <mumbai/(matic/polygon)> <rootChainManager>`
 
 ---
-##SwashTokenOnBSC
+## SwashTokenOnBSC
 
 ## Deploy token
 first set accountPrivateKey = xxxxxxxxx
