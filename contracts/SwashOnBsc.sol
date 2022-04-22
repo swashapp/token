@@ -24,7 +24,7 @@ contract SWASHOnBsc is Ownable, ERC677, ERC20Permit, AccessControl {
 
     function transferOwnership(address newOwner) public override onlyOwner {
         setAdmin(newOwner);
-        revokeAdmin(owner());
+        revokeRole(DEFAULT_ADMIN_ROLE, owner());
         Ownable.transferOwnership(newOwner);
     }
 
